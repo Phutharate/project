@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserProfile;
+use App\Models\CalendarEvent;
+
 
 class UserProfileController extends Controller
 {
@@ -55,6 +57,7 @@ class UserProfileController extends Controller
             'position' => 'required|string|max:255',
             'user_group' => 'required|string|max:255',
             'registered_at' => 'required|date',
+
         ]);
 
         $user = UserProfile::findOrFail($id);
@@ -71,5 +74,42 @@ class UserProfileController extends Controller
         return redirect()->route('user-profiles.index')->with('success', 'ลบผู้ใช้เรียบร้อยแล้ว');
     }
 
-    
+    public function confirm($id)
+{
+    $user = UserProfile::findOrFail($id);
+
+    // เช็คว่าเคยจองหรือยัง
+    $exists = CalendarEvent::where('first_name', $user->first_name)
+        ->where('last_name', $user->last_name)
+        ->where('registered_at', $user->registered_at)
+        ->exists();
+
+    if ($exists) {
+        return redirect()->back()->with('error', 'การจองนี้ถูกยืนยันแล้ว');
+    }
+
+    // สร้างข้อมูลใหม่ในตาราง calendar_events
+    CalendarEvent::create([
+        'prefix' => $user->prefix,
+        'first_name' => $user->first_name,
+        'last_name' => $user->last_name,
+        'gender' => $user->gender,
+        'position' => $user->position,
+        'user_group' => $user->user_group,
+        'registered_at' => $user->registered_at,
+        'location' => $user->location,
+        'purpose' => $user->purpose,
+        'created_at' => now(),
+        'updated_at' => now(),
+        'passenger_count' => 1,
+        'is_confirmed' => true,
+    ]);
+
+    return redirect()->route('calendar.index')->with('success', 'ยืนยันการจองเรียบร้อยแล้ว');
+}
+
+
+
+
+   
 }

@@ -16,6 +16,7 @@
 
 
 
+{{-- dashboard.blade.php หรือ layout --}}
 @if (session('success'))
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -30,6 +31,12 @@
         });
     </script>
 @endif
+
+
+    <!-- Scripts -->
+    @yield('scripts')
+</body>
+</html>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
