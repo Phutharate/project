@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>AdminLTE Dashboard</title>
+    <title>User</title>
     
     <!-- Bootstrap & AdminLTE CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">

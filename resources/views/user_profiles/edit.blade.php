@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">นามสกุล</label>
-                        <input type="text" class="form-control" name="last_name" value="{{ old('first_name', $userProfile->last_name) }}" required>
+                        <input type="text" class="form-control" name="last_name" value="{{ old('last_name', $userProfile->last_name) }}" required>
                     </div>
                 </div>
             
